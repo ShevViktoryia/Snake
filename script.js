@@ -6,7 +6,10 @@ let field, context;
 let snakeX = blockSize * 5;
 let snakeY = blockSize * 5;
 
-let foodX, foodY;
+let foodX,
+  foodY,
+  velX = 0,
+  velY = 0;
 
 window.onload = () => {
   field = document.querySelector("#game-field");
@@ -31,4 +34,11 @@ function updateField() {
 function generateFood() {
   foodX = Math.floor(Math.random() * cols) * blockSize;
   foodY = Math.floor(Math.random() * rows) * blockSize;
+}
+
+function mooving(e) {
+  if (e.code === "ArrrowUp") {
+    velX = 0;
+    velY = -1;
+  }
 }
