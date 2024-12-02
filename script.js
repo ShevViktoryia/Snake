@@ -17,7 +17,8 @@ window.onload = () => {
   field.width = cols * blockSize;
   context = field.getContext("2d");
   generateFood();
-  updateField();
+  document.addEventListener("keyup", mooving);
+  setInterval(updateField, 100);
 };
 
 function updateField() {
@@ -25,10 +26,16 @@ function updateField() {
   context.fillRect(0, 0, field.width, field.height);
 
   context.fillStyle = "yellow";
+  snakeX += velX * blockSize;
+  snakeY += velY * blockSize;
   context.fillRect(snakeX, snakeY, blockSize, blockSize);
 
   context.fillStyle = "red";
   context.fillRect(foodX, foodY, blockSize, blockSize);
+
+  if (snakeX === foodX && snakeY === foodY) {
+    generateFood();
+  }
 }
 
 function generateFood() {
@@ -37,8 +44,36 @@ function generateFood() {
 }
 
 function mooving(e) {
-  if (e.code === "ArrrowUp") {
-    velX = 0;
-    velY = -1;
+  switch (e.code) {
+    case "KeyW": {
+      if (velY != 1) {
+        velX = 0;
+        velY = -1;
+      }
+      break;
+    }
+    case "KeyS": {
+      if (velY != -1) {
+        velX = 0;
+        velY = 1;
+      }
+      break;
+    }
+    case "KeyA": {
+      if (velX != 1) {
+        velX = -1;
+        velY = 0;
+      }
+      break;
+    }
+    case "KeyD": {
+      if (velX != -1) {
+        velX = 1;
+        velY = 0;
+      }
+      break;
+    }
+    default:
+      break;
   }
 }
